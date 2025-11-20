@@ -72,6 +72,11 @@ export default function RoleSelector({ selectedUser, onSelect, disabled = false 
   const [isOpen, setIsOpen] = useState(false);
   
   const toggleDropdown = () => !disabled && setIsOpen(!isOpen);
+  const handleUserSelect = (user) => {
+    if (typeof onSelect === 'function') {
+      onSelect(user);
+    }
+  };
   
   // Avatar component
   const UserAvatar = ({ user, size = 'h-6 w-6', className = '' }) => {

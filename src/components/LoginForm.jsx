@@ -142,11 +142,21 @@ export default function LoginForm() {
         console.error('Error saving to localStorage:', storageError);
         throw new Error('Failed to save session data');
       }
+
+      // Set auth cookie so middleware lets user access /dashboard
+      try {
+        const cookieValue = encodeURIComponent(JSON.stringify({ id: userId, role: user.role }));
+        document.cookie = `swiftflow-auth=${cookieValue}; path=/; max-age=${7 * 24 * 60 * 60}; samesite=strict`;
+      } catch (cookieError) {
+        console.warn('Could not set auth cookie:', cookieError);
+      }
       
-      console.log('Redirecting to dashboard...');
-      
-      // Force a hard redirect to ensure all state is properly loaded
-      window.location.href = '/dashboard';
+      console.log('Redirecting based on role...');
+      if (selectedUser?.name === 'Admin User' || user.role?.toLowerCase() === 'admin') {
+        window.location.href = '/dashboard';
+      } else {
+        router.push('/dashboard');
+      }
     } catch (error) {
       console.error('Login error:', error);
       setError('An error occurred. Please try again.');
