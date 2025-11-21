@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Sidebar from '@/components/Sidebar';
 
 function DetailsPanel({ order, onClose }) {
   return (
@@ -160,37 +161,7 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-gray-50 flex">
       {/* Sidebar */}
-      <aside className="w-64 bg-white border-r border-gray-200 p-4 flex flex-col">
-        <div className="flex items-center gap-2 px-2 py-3">
-          <div className="h-6 w-6 rounded-md bg-blue-600" />
-          <span className="text-lg font-semibold text-black">SwiftFlow</span>
-        </div>
-
-        <nav className="mt-4 space-y-1 text-sm">
-          <SidebarItem active label="Dashboard" />
-          <SidebarItem label="Communications" />
-          <SidebarItem label="All Orders" />
-          <SidebarItem label="Customers" />
-          <SidebarItem label="Products" />
-          <SidebarItem label="Inventory" />
-          <SidebarItem label="Machines" />
-          <SidebarItem label="HRM" />
-          <SidebarGroup label="Accountant" items={['Payables', 'Receivables', 'Reports']} />
-          <SidebarItem label="Design Queue" />
-          <SidebarItem label="Production Line" />
-          <SidebarItem label="Machining Jobs" />
-          <SidebarItem label="Inspection Queue" />
-          <SidebarItem label="User Management" />
-        </nav>
-
-        <div className="mt-auto flex items-center gap-3 px-2 py-3">
-          <div className="h-9 w-9 rounded-full bg-gray-900 text-white flex items-center justify-center">N</div>
-          <div className="text-sm">
-            <div className="font-medium text-black">Nexus User</div>
-            <div className="text-black">admin@swiftflow.com</div>
-          </div>
-        </div>
-      </aside>
+      <Sidebar />
 
       {/* Main content */}
       <main className="flex-1 p-6">

@@ -2,6 +2,7 @@
 
 import React, { useMemo, useState } from 'react';
 import Link from 'next/link';
+import Sidebar from '@/components/Sidebar';
 
 const DEFAULT_ROWS = [
   { id: 'SF1005', customer: 'Tyrell Corporation', products: 'Voight-Kampff machine empathy sensors', date: 'Nov 20, 2025', status: 'Inquiry', dept: 'Design' },
@@ -47,41 +48,8 @@ export default function AllOrdersPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
-      {/* Sidebar (match dashboard) */}
-      <aside className="w-64 bg-white border-r border-gray-200 p-4 hidden md:flex flex-col">
-        <div className="flex items-center gap-2 px-2 py-3">
-          <div className="h-6 w-6 rounded-md bg-blue-600" />
-          <span className="text-lg font-semibold text-black">SwiftFlow</span>
-        </div>
-        <nav className="mt-4 space-y-1 text-sm">
-          <SideItem href="/dashboard">Dashboard</SideItem>
-          <SideItem href="/communications">Communications</SideItem>
-          <SideItem href="/orders" active>All Orders</SideItem>
-          <SideItem href="/customers">Customers</SideItem>
-          <SideItem href="/products">Products</SideItem>
-          <SideItem href="/inventory">Inventory</SideItem>
-          <SideItem href="/machines">Machines</SideItem>
-          <SideItem href="/hrm">HRM</SideItem>
-          <div className="px-3 py-2 text-black">Accountant</div>
-          <div className="ml-2 pl-1 border-l border-gray-200 space-y-1">
-            <SideItem href="/accountant/invoices">Invoices</SideItem>
-            <SideItem href="/accountant/expenses">Expenses</SideItem>
-            <SideItem href="/accountant/reports">Reports</SideItem>
-          </div>
-          <SideItem href="/design-queue">Design Queue</SideItem>
-          <SideItem href="/production-line">Production Line</SideItem>
-          <SideItem href="/machining-jobs">Machining Jobs</SideItem>
-          <SideItem href="/inspection-queue">Inspection Queue</SideItem>
-          <SideItem href="/users">User Management</SideItem>
-        </nav>
-        <div className="mt-auto flex items-center gap-3 px-2 py-3">
-          <div className="h-9 w-9 rounded-full bg-gray-900 text-white flex items-center justify-center">N</div>
-          <div className="text-sm">
-            <div className="font-medium text-black">Nexus User</div>
-            <div className="text-black">admin@swiftflow.com</div>
-          </div>
-        </div>
-      </aside>
+      {/* Sidebar */}
+      <Sidebar />
 
       {/* Main */}
       <main className="flex-1 p-6">
@@ -228,11 +196,4 @@ function OrdersTable({ rows = [] }) {
   );
 }
 
-function SideItem({ href = '#', active = false, children }) {
-  const Comp = href ? Link : 'div';
-  return (
-    <Comp href={href} className={`block px-3 py-2 rounded-md ${active ? 'bg-gray-100 text-black font-medium' : 'text-black hover:bg-gray-50'}`}>
-      {children}
-    </Comp>
-  );
-}
+ 

@@ -2,6 +2,7 @@
 
 import React, { useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
+import Sidebar from '@/components/Sidebar';
 
 const STEPS = ['Inquiry', 'Design', 'Production', 'Machining', 'Inspection', 'Completed'];
 
@@ -58,41 +59,8 @@ export default function OrderDetailsPage({ params }) {
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
-      {/* Sidebar (match dashboard) */}
-      <aside className="w-64 bg-white border-r border-gray-200 p-4 hidden md:flex flex-col">
-        <div className="flex items-center gap-2 px-2 py-3">
-          <div className="h-6 w-6 rounded-md bg-blue-600" />
-          <span className="text-lg font-semibold text-blue-700">SwiftFlow</span>
-        </div>
-        <nav className="mt-4 space-y-1 text-sm">
-          <SideItem href="/dashboard" active>Dashboard</SideItem>
-          <SideItem>Communications</SideItem>
-          <SideItem href="/orders">All Orders</SideItem>
-          <SideItem>Customers</SideItem>
-          <SideItem>Products</SideItem>
-          <SideItem>Inventory</SideItem>
-          <SideItem>Machines</SideItem>
-          <SideItem>HRM</SideItem>
-          <div className="px-3 py-2 text-black">Accountant</div>
-          <div className="ml-2 pl-1 border-l border-gray-200 space-y-1">
-            <SideItem>Payables</SideItem>
-            <SideItem>Receivables</SideItem>
-            <SideItem>Reports</SideItem>
-          </div>
-          <SideItem>Design Queue</SideItem>
-          <SideItem>Production Line</SideItem>
-          <SideItem>Machining Jobs</SideItem>
-          <SideItem>Inspection Queue</SideItem>
-          <SideItem>User Management</SideItem>
-        </nav>
-        <div className="mt-auto flex items-center gap-3 px-2 py-3">
-          <div className="h-9 w-9 rounded-full bg-gray-900 text-white flex items-center justify-center">N</div>
-          <div className="text-sm">
-            <div className="font-medium text-black">Nexus User</div>
-            <div className="text-black">admin@swiftflow.com</div>
-          </div>
-        </div>
-      </aside>
+      {/* Sidebar */}
+      <Sidebar />
 
       {/* Main */}
       <main className="flex-1 p-4 md:p-6">
@@ -118,7 +86,7 @@ export default function OrderDetailsPage({ params }) {
               const active = i === activeIndex;
               return (
                 <div key={step} className="flex-1 min-w-[140px] flex items-center">
-                  <div className="flex flex-col items-center -mt-1">
+                  <div className="flex flex-col items-center -mb-1">
                     <div className={`flex items-center justify-center h-9 w-9 rounded-full border-2 ${completed ? 'bg-blue-600 border-blue-600 text-white' : active ? 'border-blue-600 text-blue-600' : 'border-gray-300 text-gray-400'}`}>
                       {completed ? '✓' : '•'}
                     </div>
@@ -275,11 +243,4 @@ export default function OrderDetailsPage({ params }) {
   );
 }
 
-function SideItem({ href = '#', active = false, children }) {
-  const Comp = href ? Link : 'div';
-  return (
-    <Comp href={href} className={`block px-3 py-2 rounded-md ${active ? 'bg-gray-100 text-black font-medium' : 'text-black hover:bg-gray-50'}`}>
-      {children}
-    </Comp>
-  );
-}
+ 
