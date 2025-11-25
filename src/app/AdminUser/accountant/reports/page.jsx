@@ -1,6 +1,3 @@
-'use client';
-
-import AdminTemplate from '../template';
 
 'use client'
 

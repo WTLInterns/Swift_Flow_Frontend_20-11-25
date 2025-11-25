@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import Sidebar from '@/components/Sidebar';
+
 function DetailsPanel({ order, onClose }) {
   return (
     <div className="fixed inset-0 bg-black/20 z-50">
@@ -153,31 +153,23 @@ export default function DashboardPage() {
       status: 'Inquiry',
       dept: form.dept || 'Design',
     };
-    setRows(prev => [newRow, ...prev]);
+    setRows(prev => [...prev, newRow]);
     setShowCreateModal(false);
     setForm({ customer: '', products: '', custom: '', units: '', material: '', dept: '' });
   };
   return (
-    <div className="w-full">
-      {/* Main content */}
-      <main className="w-full p-0">
-        {/* Top bar */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-3">
-            <button className="p-2 rounded-md border border-gray-200 hover:bg-gray-50">
-              <span className="sr-only">Toggle</span>✦
-            </button>
-            <h1 className="text-2xl font-semibold text-black">Dashboard</h1>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <button className="p-2 rounded-full hover:bg-gray-100">🔔</button>
-            <div className="h-8 w-8 rounded-full bg-gray-800" />
+    <div className="p-6">
+      <div className="bg-white border border-gray-200 rounded-xl">
+        {/* Header */}
+        <div className="p-6 flex items-start justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">Inspector Dashboard</h1>
+            <p className="text-sm text-gray-600 mt-1">Review and inspect finished products before completion.</p>
           </div>
         </div>
 
         {/* Charts row */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 px-6 pb-6">
           <div className="bg-white border border-gray-200 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-lg font-semibold text-black">Orders by Status</h2>
@@ -207,110 +199,115 @@ export default function DashboardPage() {
         </div>
 
         {/* Orders table section */}
-        <div className="bg-white border-t border-gray-200 p-6">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-semibold text-black">All Orders</h2>
-            <button onClick={() => setShowCreateModal(true)} className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-4 py-2 rounded-md">
-              <span>＋</span> Create Order
-            </button>
-          </div>
-          <div className="flex items-center gap-3 mb-4">
-            <div className="relative flex-1">
-              <input
-                type="text"
-                placeholder="Search by Order ID or Customer..."
-                className="w-full border border-gray-200 rounded-md px-3 py-2 pl-9 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-              />
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">🔎</span>
+        <div className="bg-white border border-gray-200 rounded-lg overflow-hidden mx-6 mb-6">
+          <div className="px-6 py-4 border-b border-gray-200">
+            <div className="flex items-center justify-between">
+              <h1 className="text-lg font-semibold text-black">Inspection Department</h1>
             </div>
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="border border-gray-200 rounded-md px-2 py-2 text-sm text-black"
-            >
-              <option value="All">All</option>
-              <option value="Inquiry">Inquiry</option>
-              <option value="Design">Design</option>
-              <option value="Production">Production</option>
-              <option value="Machining">Machining</option>
-              <option value="Inspection">Inspection</option>
-              <option value="Completed">Completed</option>
-            </select>
+            <div className="flex items-center justify-between mt-2 text-black">
+              <p className="text-sm">Review and inspect finished products.</p>
+            </div>
+            <div className="flex items-center gap-3 mt-4">
+              <div className="relative flex-1">
+                <input
+                  type="text"
+                  placeholder="Search by Order ID or Customer..."
+                  className="w-full border border-gray-200 rounded-md px-3 py-2 pl-9 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                />
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">🔎</span>
+              </div>
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="border border-gray-200 rounded-md px-2 py-2 text-sm text-black"
+              >
+                <option value="All">All</option>
+                <option value="Inquiry">Inquiry</option>
+                <option value="Design">Design</option>
+                <option value="Production">Production</option>
+                <option value="Machining">Machining</option>
+                <option value="Inspection">Inspection</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </div>
           </div>
 
-          <OrdersTable rows={rows} statusFilter={statusFilter} onView={setSelectedOrder} />
+          <div className="bg-white">
+            <OrdersTable rows={rows} statusFilter={statusFilter} onView={setSelectedOrder} />
+          </div>
         </div>
-        {/* Details Panel */}
-        {selectedOrder && (
-          <DetailsPanel order={selectedOrder} onClose={() => setSelectedOrder(null)} />
-        )}
+      </div>
 
-        {/* Create Order Modal */}
-        {showCreateModal && (
-          <div className="fixed inset-0 z-50">
-            <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={() => setShowCreateModal(false)} />
-            <div className="absolute inset-0 flex items-center justify-center p-4">
-              <div className="w-full max-w-lg bg-white rounded-lg shadow-xl border border-gray-200">
-                <div className="flex items-center justify-between p-4 border-b border-gray-200">
-                  <h3 className="text-lg font-semibold text-black">Create New Order</h3>
-                  <button onClick={() => setShowCreateModal(false)} className="text-black">×</button>
+      {/* Details Panel */}
+      {selectedOrder && (
+        <DetailsPanel order={selectedOrder} onClose={() => setSelectedOrder(null)} />
+      )}
+
+      {/* Create Order Modal */}
+      {showCreateModal && (
+        <div className="fixed inset-0 z-50">
+          <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={() => setShowCreateModal(false)} />
+          <div className="absolute inset-0 flex items-center justify-center p-4">
+            <div className="w-full max-w-lg bg-white rounded-lg shadow-xl border border-gray-200">
+              <div className="flex items-center justify-between p-4 border-b border-gray-200">
+                <h3 className="text-lg font-semibold text-black">Create New Order</h3>
+                <button onClick={() => setShowCreateModal(false)} className="text-black">×</button>
+              </div>
+              <div className="p-4 space-y-4">
+                <div>
+                  <label className="block text-xs font-medium mb-1 text-black">Customer</label>
+                  <select value={form.customer} onChange={(e) => setForm(f => ({ ...f, customer: e.target.value }))} className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm text-black">
+                    <option value="">Select Customer...</option>
+                    <option value="Tyrell Corporation">Tyrell Corporation</option>
+                    <option value="Acme Corp">Acme Corp</option>
+                    <option value="Wayne Tech">Wayne Tech</option>
+                  </select>
                 </div>
-                <div className="p-4 space-y-4">
-                  <div>
-                    <label className="block text-xs font-medium mb-1 text-black">Customer</label>
-                    <select value={form.customer} onChange={(e)=>setForm(f=>({...f, customer:e.target.value}))} className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm text-black">
-                      <option value="">Select Customer...</option>
-                      <option value="Tyrell Corporation">Tyrell Corporation</option>
-                      <option value="Acme Corp">Acme Corp</option>
-                      <option value="Wayne Tech">Wayne Tech</option>
-                    </select>
-                  </div>
 
-                  <div>
-                    <label className="block text-xs font-medium mb-1 text-black">Products</label>
-                    <select value={form.products} onChange={(e)=>setForm(f=>({...f, products:e.target.value}))} className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm text-black">
-                      <option value="">Select Products...</option>
-                      <option value="Custom brackets">Custom brackets</option>
-                      <option value="Titanium shafts">Titanium shafts</option>
-                    </select>
-                  </div>
+                <div>
+                  <label className="block text-xs font-medium mb-1 text-black">Products</label>
+                  <select value={form.products} onChange={(e) => setForm(f => ({ ...f, products: e.target.value }))} className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm text-black">
+                    <option value="">Select Products...</option>
+                    <option value="Custom brackets">Custom brackets</option>
+                    <option value="Titanium shafts">Titanium shafts</option>
+                  </select>
+                </div>
 
-                  <div>
-                    <label className="block text-xs font-medium mb-1 text-black">Or Enter Custom Product Details</label>
-                    <textarea value={form.custom} onChange={(e)=>setForm(f=>({...f, custom:e.target.value}))} placeholder="For custom, one-off products, describe them here..." className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm min-h-[90px] text-black" />
-                  </div>
+                <div>
+                  <label className="block text-xs font-medium mb-1 text-black">Or Enter Custom Product Details</label>
+                  <textarea value={form.custom} onChange={(e) => setForm(f => ({ ...f, custom: e.target.value }))} placeholder="For custom, one-off products, describe them here..." className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm min-h-[90px] text-black" />
+                </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-medium mb-1 text-black">Units</label>
-                      <input value={form.units} onChange={(e)=>setForm(f=>({...f, units:e.target.value}))} type="number" placeholder="e.g. 500" className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm text-black" />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-medium mb-1 text-black">Material</label>
-                      <input value={form.material} onChange={(e)=>setForm(f=>({...f, material:e.target.value}))} type="text" placeholder="e.g. Stainless Steel 316" className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm text-black" />
-                    </div>
-                  </div>
-
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-medium mb-1 text-black">Assign to Department</label>
-                    <select value={form.dept} onChange={(e)=>setForm(f=>({...f, dept:e.target.value}))} className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm text-black">
-                      <option value="">Select initial department...</option>
-                      <option value="Design">Design</option>
-                      <option value="Production">Production</option>
-                      <option value="Machining">Machining</option>
-                      <option value="Inspection">Inspection</option>
-                    </select>
+                    <label className="block text-xs font-medium mb-1 text-black">Units</label>
+                    <input value={form.units} onChange={(e) => setForm(f => ({ ...f, units: e.target.value }))} type="number" placeholder="e.g. 500" className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm text-black" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium mb-1 text-black">Material</label>
+                    <input value={form.material} onChange={(e) => setForm(f => ({ ...f, material: e.target.value }))} type="text" placeholder="e.g. Stainless Steel 316" className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm text-black" />
                   </div>
                 </div>
-                <div className="flex items-center justify-end gap-2 p-4 border-t border-gray-200">
-                  <button onClick={() => setShowCreateModal(false)} className="px-4 py-2 rounded-md border border-gray-300 text-black">Cancel</button>
-                  <button onClick={createOrder} className="px-4 py-2 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white">Create Order</button>
+
+                <div>
+                  <label className="block text-xs font-medium mb-1 text-black">Assign to Department</label>
+                  <select value={form.dept} onChange={(e) => setForm(f => ({ ...f, dept: e.target.value }))} className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm text-black">
+                    <option value="">Select initial department...</option>
+                    <option value="Design">Design</option>
+                    <option value="Production">Production</option>
+                    <option value="Machining">Machining</option>
+                    <option value="Inspection">Inspection</option>
+                  </select>
                 </div>
+              </div>
+              <div className="flex items-center justify-end gap-2 p-4 border-t border-gray-200">
+                <button onClick={() => setShowCreateModal(false)} className="px-4 py-2 rounded-md border border-gray-300 text-black">Cancel</button>
+                <button onClick={createOrder} className="px-4 py-2 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white">Create Order</button>
               </div>
             </div>
           </div>
-        )}
-      </main>
+        </div>
+      )}
     </div>
   );
 }

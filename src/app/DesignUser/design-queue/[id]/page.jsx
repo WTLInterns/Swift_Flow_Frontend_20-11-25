@@ -42,7 +42,7 @@ const OrderDetailsPanel = ({ isOpen, onClose, orderId }) => {
     const prev = history.length ? history[history.length - 1].to : base.status;
     const entry = {
       id: `${Date.now()}`,
-      user: 'Admin User',
+      user: 'Design User',
       from: prev,
       to: currentStatus,
       notes: notes?.trim(),
@@ -240,17 +240,17 @@ export default function OrderDetailsPage({ params }) {
       <main className="flex-1 p-6">
         <div className="max-w-7xl mx-auto">
           <div className="mb-6">
-            <h1 className="text-2xl font-bold text-gray-900">Order Management</h1>
-            <p className="text-gray-600 mt-1">Manage and track customer orders</p>
+            <h1 className="text-2xl font-bold text-gray-900">Design Queue</h1>
+            <p className="text-gray-600 mt-1">Manage design tasks and approvals</p>
           </div>
           
           {/* Main content grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
               <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <h2 className="text-lg font-semibold text-gray-900 mb-4">Orders</h2>
+                <h2 className="text-lg font-semibold text-gray-900 mb-4">Design Orders</h2>
                 <div className="text-center py-12 text-gray-500">
-                  <p>Select an order to view details</p>
+                  <p>Select a design order to view details</p>
                   <button 
                     onClick={() => setIsPanelOpen(true)}
                     className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
@@ -266,13 +266,13 @@ export default function OrderDetailsPage({ params }) {
                 <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
                 <div className="space-y-3">
                   <button className="w-full text-left px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
-                    <span className="text-sm font-medium text-gray-900">Create New Order</span>
+                    <span className="text-sm font-medium text-gray-900">Upload Design</span>
                   </button>
                   <button className="w-full text-left px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
-                    <span className="text-sm font-medium text-gray-900">View Reports</span>
+                    <span className="text-sm font-medium text-gray-900">View Templates</span>
                   </button>
                   <button className="w-full text-left px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
-                    <span className="text-sm font-medium text-gray-900">Team Assignments</span>
+                    <span className="text-sm font-medium text-gray-900">Design Guidelines</span>
                   </button>
                 </div>
               </div>

@@ -2,7 +2,6 @@
 
 'use client';
 import { useMemo, useState } from 'react';
-import Sidebar from '@/components/Sidebar';
 
 export default function CommunicationsPage() {
   const [activeTab, setActiveTab] = useState('inbox'); // inbox | sent
@@ -72,59 +71,55 @@ export default function CommunicationsPage() {
   };
 
   return (
-    <div className="w-full">
-      {/* Page content - layout is handled by ClientLayout */}
-      <div className="p-6">
-        <div className="bg-white border border-gray-200 rounded-xl p-6">
-          <div className="flex items-start justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Communications Center</h1>
-              <p className="text-sm text-gray-600 mt-1">Send and receive messages between departments.</p>
-            </div>
-            <button onClick={() => setShowModal(true)} className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-4 py-2 rounded-md">
-              <span>＋</span> New Message
-            </button>
-          </div>
+    <div className="bg-white border border-gray-200 rounded-xl p-6">
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">Communications Center</h1>
+          <p className="text-sm text-gray-600 mt-1">Send and receive messages between departments.</p>
+        </div>
+        <button onClick={() => setShowModal(true)} className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-4 py-2 rounded-md">
+          <span>＋</span> New Message
+        </button>
+      </div>
 
-          {/* Tabs + Search */}
-          <div className="mt-5 flex items-center gap-3 flex-wrap">
-            <div className="flex rounded-lg border border-gray-200 bg-gray-50 p-1">
-              <button onClick={() => setActiveTab('inbox')} className={`px-4 py-2 text-sm rounded-md ${activeTab==='inbox' ? 'bg-white shadow text-gray-900' : 'text-gray-600'}`}>Inbox ({inbox.length})</button>
-              <button onClick={() => setActiveTab('sent')} className={`px-4 py-2 text-sm rounded-md ${activeTab==='sent' ? 'bg-white shadow text-gray-900' : 'text-gray-600'}`}>Sent ({sent.length})</button>
-            </div>
-            <div className="flex-1 min-w-[220px]">
-              <input value={query} onChange={(e)=>setQuery(e.target.value)} placeholder="Search messages..." className="w-full rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none" />
-            </div>
-          </div>
+      {/* Tabs + Search */}
+      <div className="mt-5 flex flex-col lg:flex-row lg:items-center gap-3">
+        <div className="flex rounded-lg border border-gray-200 bg-gray-50 p-1 w-full lg:w-auto">
+          <button onClick={() => setActiveTab('inbox')} className={`flex-1 lg:flex-initial px-4 py-2 text-sm rounded-md ${activeTab==='inbox' ? 'bg-white shadow text-gray-900' : 'text-gray-600'}`}>Inbox ({inbox.length})</button>
+          <button onClick={() => setActiveTab('sent')} className={`flex-1 lg:flex-initial px-4 py-2 text-sm rounded-md ${activeTab==='sent' ? 'bg-white shadow text-gray-900' : 'text-gray-600'}`}>Sent ({sent.length})</button>
+        </div>
+        <div className="flex-1 min-w-[220px]">
+          <input value={query} onChange={(e)=>setQuery(e.target.value)} placeholder="Search messages..." className="w-full rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none" />
+        </div>
+      </div>
 
-          {/* Message Cards */}
-          <div className="mt-5 space-y-4">
-            {filtered.map(item => (
-              <div key={item.id} className="rounded-lg border border-gray-200 bg-indigo-50/40">
-                <div className="p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex items-center gap-2">
-                      <span className={`inline-block h-2.5 w-2.5 rounded-full ${item.read ? 'bg-gray-300' : 'bg-red-500'}`} />
-                      <p className="text-sm font-semibold text-gray-900">From: {item.dept}</p>
-                      {item.orderId && <span className="text-xs font-medium text-gray-700 bg-white border border-gray-200 rounded px-2 py-0.5">#{item.orderId}</span>}
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${priorityPill(item.priority)}`}>{item.priority}</span>
-                      {activeTab==='inbox' && !item.read && (
-                        <button onClick={() => markAsRead(item.id)} className="text-xs font-medium px-3 py-1 rounded-md border border-gray-300 bg-white hover:bg-gray-50">Mark as Read</button>
-                      )}
-                    </div>
-                  </div>
-                  <p className="mt-1 text-xs text-gray-500">{item.timestamp}</p>
-                  <p className="mt-2 text-sm text-gray-800">{item.body}</p>
+      {/* Message Cards */}
+      <div className="mt-5 space-y-4">
+        {filtered.map(item => (
+          <div key={item.id} className="rounded-lg border border-gray-200 bg-indigo-50/40">
+            <div className="p-4">
+              <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-3">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                  <span className={`inline-block h-2.5 w-2.5 rounded-full ${item.read ? 'bg-gray-300' : 'bg-red-500'}`} />
+                  <p className="text-sm font-semibold text-gray-900">From: {item.dept}</p>
+                  {item.orderId && <span className="text-xs font-medium text-gray-700 bg-white border border-gray-200 rounded px-2 py-0.5">#{item.orderId}</span>}
+                </div>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                  <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${priorityPill(item.priority)}`}>{item.priority}</span>
+                  {activeTab==='inbox' && !item.read && (
+                    <button onClick={() => markAsRead(item.id)} className="text-xs font-medium px-3 py-1 rounded-md border border-gray-300 bg-white hover:bg-gray-50">Mark as Read</button>
+                  )}
                 </div>
               </div>
-            ))}
-            {filtered.length === 0 && (
-              <div className="text-center text-sm text-gray-500 py-10">No messages found.</div>
-            )}
+              <p className="mt-1 text-xs text-gray-500">{item.timestamp}</p>
+              <p className="mt-2 text-sm text-gray-800 break-words">{item.body}</p>
+            </div>
           </div>
-        </div>
+        ))}
+        {filtered.length === 0 && (
+          <div className="text-center text-sm text-gray-500 py-10">No messages found.</div>
+        )}
+      </div>
 
         {/* New Message Modal */}
         {showModal && (
@@ -174,7 +169,6 @@ export default function CommunicationsPage() {
             </div>
           </div>
         )}
-      </div>
     </div>
   );
 }

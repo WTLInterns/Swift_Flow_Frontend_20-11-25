@@ -1,11 +1,12 @@
 
-
 'use client';
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Sidebar from '@/components/Sidebar';
 
-export default function ProductionLinePage() {
+export default function DesignQueuePage() {
+  const router = useRouter();
   const [query, setQuery] = useState('');
   const [status, setStatus] = useState('all');
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -56,18 +57,15 @@ export default function ProductionLinePage() {
   };
 
   return (
-    <div className="w-full">
-      {/* Page content - layout is handled by ClientLayout */}
-      <div className="p-6">
+    <div className="min-h-screen bg-gray-50 flex">
+      <Sidebar />
+      <main className="flex-1 p-6">
         <div className="bg-white border border-gray-200 rounded-xl p-6">
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">All Orders</h1>
-            <p className="text-sm text-gray-600 mt-1">Oversee and manage all active and completed orders.</p>
+            <h1 className="text-3xl font-bold text-gray-900">Machine Department</h1>
+            <p className="text-sm text-gray-600 mt-1">Manage all assigned machining jobs.</p>
           </div>
-          <button onClick={() => setShowCreateModal(true)} className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-4 py-2 rounded-md">
-            <span>＋</span> Create Order
-          </button>
         </div>
 
         <div className="mt-5 flex items-center gap-3">
@@ -117,7 +115,12 @@ export default function ProductionLinePage() {
                     <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${badge(o.status)}`}>{o.status}</span>
                   </td>
                   <td className="py-4 px-4">
-                    <Link href={`/orders/${o.id}`} className="text-gray-900 hover:text-indigo-700 font-medium">View Details</Link>
+                    <button 
+                      onClick={() => router.push(`/DesignUser/design-queue/${o.id}`)}
+                      className="text-indigo-600 hover:text-indigo-800 font-medium hover:underline"
+                    >
+                      View Details
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -190,7 +193,7 @@ export default function ProductionLinePage() {
             </div>
           </div>
         )}
-      </div>
+      </main>
     </div>
   );
 }

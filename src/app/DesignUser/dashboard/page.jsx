@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import Sidebar from '@/components/Sidebar';
+
 function DetailsPanel({ order, onClose }) {
   return (
     <div className="fixed inset-0 bg-black/20 z-50">
@@ -209,11 +209,11 @@ export default function DashboardPage() {
         {/* Orders table section */}
         <div className="bg-white border-t border-gray-200 p-6">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-semibold text-black">All Orders</h2>
-            <button onClick={() => setShowCreateModal(true)} className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-4 py-2 rounded-md">
-              <span>＋</span> Create Order
-            </button>
+            <h1 className="text-lg font-semibold text-black">Design Department</h1>
           </div>
+          <div  className="flex items-center justify-between mb-3 text-black">
+            <p><p>Manage orders in the inquiry and design phase.</p></p>
+            </div>
           <div className="flex items-center gap-3 mb-4">
             <div className="relative flex-1">
               <input

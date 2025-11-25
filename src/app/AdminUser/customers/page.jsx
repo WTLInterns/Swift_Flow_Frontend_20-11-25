@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import Sidebar from '@/app/AdminUser/components/Sidebar';
+import Sidebar from '@/components/Sidebar';
 
 export default function CustomersPage() {
   const [showModal, setShowModal] = useState(false);
@@ -102,10 +102,9 @@ export default function CustomersPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
-      <Sidebar />
-
-      <main className="flex-1 p-4 sm:p-6 overflow-x-hidden">
+    <div className="w-full">
+      {/* Page content - layout is handled by ClientLayout */}
+      <div className="p-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
           <div>
             <h1 className="text-xl sm:text-2xl font-semibold text-black">Customer Management</h1>
@@ -382,7 +381,7 @@ export default function CustomersPage() {
           </div>
           
         )}
-      </main>
+      </div>
     </div>
   );
 }

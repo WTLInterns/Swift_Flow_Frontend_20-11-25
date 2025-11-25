@@ -3,7 +3,7 @@
 'use client';
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import Sidebar from '@/app/AdminUser/components/Sidebar';
+import Sidebar from '@/components/Sidebar';
 
 export default function ProductionLinePage() {
   const [query, setQuery] = useState('');
@@ -56,9 +56,9 @@ export default function ProductionLinePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
-      <Sidebar />
-      <main className="flex-1 p-6">
+    <div className="w-full">
+      {/* Page content - layout is handled by ClientLayout */}
+      <div className="p-6">
         <div className="bg-white border border-gray-200 rounded-xl p-6">
         <div className="flex items-start justify-between">
           <div>
@@ -190,7 +190,7 @@ export default function ProductionLinePage() {
             </div>
           </div>
         )}
-      </main>
+      </div>
     </div>
   );
 }

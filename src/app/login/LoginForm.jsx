@@ -35,7 +35,8 @@ export default function LoginForm() {
       password: 'machine123', 
       name: 'Tony Stark', 
       email: 'machinist@swiftflow.com', 
-      role: 'machinist' 
+      role: 'machinist',
+      department: 'Machining'
     },
     inspector: { 
       password: 'inspect123', 
@@ -49,28 +50,17 @@ export default function LoginForm() {
     e.preventDefault();
     setError('');
     
-    console.log('=== Login Form Submitted ===');
-    console.log('User ID:', userId);
-    console.log('Selected User:', selectedUser);
-    
     if (!selectedUser) {
-      const errorMsg = 'Please select a role';
-      console.error(errorMsg);
-      setError(errorMsg);
+      setError('Please select a role');
       return;
     }
     
     if (!userId || !password) {
-      const errorMsg = 'Please enter both ID and password';
-      console.error(errorMsg);
-      setError(errorMsg);
+      setError('Please enter both ID and password');
       return;
     }
     
-    // Ensure we have the user data we need
     if (!selectedUser.role) {
-      const errorMsg = 'Invalid user data';
-      console.error(errorMsg, selectedUser);
       setError('Invalid user data. Please try again.');
       return;
     }
@@ -78,8 +68,6 @@ export default function LoginForm() {
     setIsLoading(true);
     
     try {
-      console.log('Starting login process...');
-      
       // Simulate API call delay
       await new Promise(resolve => setTimeout(resolve, 500));
       
@@ -87,34 +75,20 @@ export default function LoginForm() {
       const userKey = userId.toLowerCase().trim();
       const user = validCredentials[userKey];
       
-      // Debug logging
-      console.log('=== Login Details ===');
-      console.log('User Key:', userKey);
-      console.log('User from DB:', user);
-      console.log('Selected User Role:', selectedUser.role);
-      console.log('Password Match:', user?.password === password);
-      console.log('Role Match:', user?.role === selectedUser.role);
-      
       // Check if user exists
       if (!user) {
-        const errorMsg = `User '${userId}' not found`;
-        console.error(errorMsg);
         setError('Invalid credentials. Please check your ID and try again.');
         return;
       }
       
       // Check password
       if (user.password !== password) {
-        const errorMsg = 'Incorrect password';
-        console.error(errorMsg);
         setError('Incorrect password. Please try again.');
         return;
       }
       
       // Check role match
       if (user.role !== selectedUser.role) {
-        const errorMsg = `Role mismatch. Expected ${user.role}, got ${selectedUser.role}`;
-        console.error(errorMsg);
         setError('Incorrect role selected. Please try again.');
         return;
       }
@@ -125,37 +99,26 @@ export default function LoginForm() {
         name: user.name,
         email: user.email,
         role: user.role,
-        token: 'dummy-jwt-token',
         department: selectedUser.department || user.role,
         lastLogin: new Date().toISOString()
       };
       
-      console.log('=== Login Successful ===');
-      console.log('User Data:', userData);
-      
       // Store user data
-      try {
-        localStorage.setItem('swiftflow-user', JSON.stringify(userData));
-        localStorage.setItem('swiftflow-token', 'dummy-jwt-token');
-        console.log('User data saved to localStorage');
-      } catch (storageError) {
-        console.error('Error saving to localStorage:', storageError);
-        throw new Error('Failed to save session data');
-      }
-
-      // Set auth cookie so middleware lets user access /dashboard
-      try {
-        const cookieValue = encodeURIComponent(JSON.stringify({ id: userId, role: user.role }));
-        document.cookie = `swiftflow-auth=${cookieValue}; path=/; max-age=${7 * 24 * 60 * 60}; samesite=strict`;
-      } catch (cookieError) {
-        console.warn('Could not set auth cookie:', cookieError);
-      }
+      localStorage.setItem('swiftflow-user', JSON.stringify(userData));
       
-      console.log('Redirecting based on role...');
-      if (selectedUser?.name === 'Admin User' || user.role?.toLowerCase() === 'admin') {
+      // Redirect based on role
+      if (user.role === 'admin') {
         window.location.href = '/AdminUser/dashboard';
+      } else if (user.role === 'designer') {
+        window.location.href = '/DesignUser/dashboard';
+      } else if (user.role === 'machinist') {
+        window.location.href = '/MechanistUser/dashboard';
+      } else if (user.role === 'inspector') {
+        window.location.href = '/InspectionUser/dashboard';
       } else {
-        router.push('/dashboard');
+        // For other roles, redirect to a default page or show an error
+        setError('Access not configured for this role. Please contact support.');
+        localStorage.removeItem('swiftflow-user'); // Clear invalid login
       }
     } catch (error) {
       console.error('Login error:', error);

@@ -2,12 +2,121 @@
 'use client';
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import Sidebar from '@/app/AdminUser/components/Sidebar';
+import Sidebar from '@/components/Sidebar';
+
+function DetailsPanel({ order, onClose }) {
+  if (!order) return null;
+  
+  return (
+    <div className="fixed inset-0 bg-black/20 z-50">
+      <div className="absolute inset-y-0 right-0 w-full lg:w-4/5 bg-gray-50 shadow-xl overflow-y-auto">
+        {/* Header */}
+        <div className="sticky top-0 bg-gray-50 border-b border-gray-200 p-4 flex items-center justify-between">
+          <div>
+            <h2 className="text-xl font-semibold text-black">Order #{order.id}</h2>
+            <p className="text-sm text-black">Track the progress of the order from inquiry to completion.</p>
+          </div>
+          <button onClick={onClose} className="px-3 py-1.5 rounded-md border border-gray-300 hover:bg-gray-100">Close</button>
+        </div>
+
+        {/* Progress */}
+        <div className="m-4 bg-white rounded-lg border border-gray-200 p-4">
+          <div className="flex items-center justify-between">
+            {['Inquiry','Design','Production','Machining','Inspection','Completed'].map((step, i) => (
+              <div key={step} className="flex-1 flex items-center">
+                <div className={`flex items-center justify-center h-8 w-8 rounded-full border ${order.status===step ? 'bg-blue-600 text-white border-blue-600' : 'border-gray-300 text-gray-500'}`}>
+                  {i+1}
+                </div>
+                {i < 5 && <div className="flex-1 h-px bg-gray-300 mx-2" />}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Content grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-4">
+          <div className="lg:col-span-2 space-y-6">
+            <section className="bg-white border border-gray-200 rounded-lg p-4">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="font-semibold text-black">Project Details</h3>
+                <button className="text-black hover:text-black">✎</button>
+              </div>
+              <div className="mb-4">
+                <div className="text-xs text-black mb-1">Products</div>
+                <div className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-gray-100 text-black">
+                  {order.products}
+                </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <div className="text-xs text-black mb-1">Customer</div>
+                  <div className="text-black">{order.customer}</div>
+                </div>
+                <div>
+                  <div className="text-xs text-black mb-1">Date Created</div>
+                  <div className="text-black">{order.date}</div>
+                </div>
+                <div>
+                  <div className="text-xs text-black mb-1">Status</div>
+                  <div className="text-black">{order.status}</div>
+                </div>
+              </div>
+            </section>
+
+            <section className="bg-white border border-gray-200 rounded-lg p-4">
+              <h3 className="font-semibold text-black mb-3">Update Order Status</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <select className="border border-gray-200 rounded-md px-2 py-2 text-sm">
+                  <option>Select next status...</option>
+                  {['Inquiry','Design','Production','Machining','Inspection','Completed'].map(s => (
+                    <option key={s}>{s}</option>
+                  ))}
+                </select>
+                <div>
+                  <input type="file" className="block w-full text-sm text-gray-600" />
+                </div>
+                <div className="sm:col-span-2">
+                  <textarea 
+                    placeholder="Add comments about the status change..." 
+                    className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm min-h-[90px] text-black" 
+                  />
+                </div>
+                <div className="sm:col-span-2">
+                  <button className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-4 py-2 rounded-md">
+                    Update Status
+                  </button>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <div className="space-y-6">
+            <section className="bg-white border border-gray-200 rounded-lg p-4">
+              <h3 className="font-semibold text-black mb-3">Status History</h3>
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="flex-shrink-0 mt-1">
+                    <div className="h-2 w-2 rounded-full bg-blue-500"></div>
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium text-black">Order Created</div>
+                    <div className="text-xs text-gray-500">{order.date} by System</div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function DesignQueuePage() {
   const [query, setQuery] = useState('');
   const [status, setStatus] = useState('all');
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
   const [orders, setOrders] = useState([
     { id: 'SF1005', customer: 'Tyrell Corporation', products: 'Voight-Kampff machine empathy sensors', date: 'Nov 19, 2025', status: 'Inquiry' },
     { id: 'SF1004', customer: 'Cyberdyne Systems', products: 'T-800 endoskeleton fingers (prototype)', date: 'Nov 17, 2025', status: 'Design' },
@@ -55,9 +164,9 @@ export default function DesignQueuePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
-      <Sidebar />
-      <main className="flex-1 p-6">
+    <div className="w-full">
+      {/* Page content - layout is handled by ClientLayout */}
+      <div className="p-6">
         <div className="bg-white border border-gray-200 rounded-xl p-6">
         <div className="flex items-start justify-between">
           <div>
@@ -116,7 +225,12 @@ export default function DesignQueuePage() {
                     <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${badge(o.status)}`}>{o.status}</span>
                   </td>
                   <td className="py-4 px-4">
-                    <Link href={`/orders/${o.id}`} className="text-gray-900 hover:text-indigo-700 font-medium">View Details</Link>
+                    <button 
+                      onClick={() => setSelectedOrder(o)}
+                      className="text-indigo-600 hover:text-indigo-800 font-medium hover:underline"
+                    >
+                      View Details
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -189,7 +303,13 @@ export default function DesignQueuePage() {
             </div>
           </div>
         )}
-      </main>
+      </div>
+      
+      {/* Details Panel */}
+      <DetailsPanel 
+        order={selectedOrder} 
+        onClose={() => setSelectedOrder(null)} 
+      />
     </div>
   );
 }

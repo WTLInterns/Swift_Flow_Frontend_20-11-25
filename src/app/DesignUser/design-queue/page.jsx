@@ -1,11 +1,11 @@
 
-
 'use client';
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import Sidebar from '@/components/Sidebar';
+import { useRouter } from 'next/navigation';
 
-export default function ProductionLinePage() {
+export default function DesignQueuePage() {
+  const router = useRouter();
   const [query, setQuery] = useState('');
   const [status, setStatus] = useState('all');
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -56,74 +56,72 @@ export default function ProductionLinePage() {
   };
 
   return (
-    <div className="w-full">
-      {/* Page content - layout is handled by ClientLayout */}
-      <div className="p-6">
-        <div className="bg-white border border-gray-200 rounded-xl p-6">
-        <div className="flex items-start justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">All Orders</h1>
-            <p className="text-sm text-gray-600 mt-1">Oversee and manage all active and completed orders.</p>
-          </div>
-          <button onClick={() => setShowCreateModal(true)} className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-4 py-2 rounded-md">
-            <span>＋</span> Create Order
-          </button>
+    <div className="bg-white border border-gray-200 rounded-xl p-6">
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">Design Department</h1>
+          <p className="text-sm text-gray-600 mt-1">Manage orders in the inquiry and design phase.</p>
         </div>
+      </div>
 
-        <div className="mt-5 flex items-center gap-3">
-          <div className="flex-1">
-            <div className="relative">
-              <input
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search by Order ID or Customer..."
-                className="w-full rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none"
-              />
-            </div>
-          </div>
-          <div>
-            <select value={status} onChange={(e) => setStatus(e.target.value)} className="rounded-md border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-900">
-              <option value="all">all</option>
-              <option value="inquiry">Inquiry</option>
-              <option value="design">Design</option>
-              <option value="machining">Machining</option>
-              <option value="inspection">Inspection</option>
-            </select>
+      <div className="mt-5 flex flex-col lg:flex-row lg:items-center gap-3">
+        <div className="flex-1">
+          <div className="relative">
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search by Order ID or Customer..."
+              className="w-full rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none"
+            />
           </div>
         </div>
+        <div>
+          <select value={status} onChange={(e) => setStatus(e.target.value)} className="rounded-md border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-900">
+            <option value="all">all</option>
+            <option value="inquiry">Inquiry</option>
+            <option value="design">Design</option>
+            <option value="machining">Machining</option>
+            <option value="inspection">Inspection</option>
+          </select>
+        </div>
+      </div>
 
-        <div className="mt-4 overflow-x-auto">
-          <table className="min-w-full text-sm">
-            <thead>
-              <tr className="text-left text-gray-600">
-                <th className="py-3 px-4 font-medium">Order ID</th>
-                <th className="py-3 px-4 font-medium">Customer</th>
-                <th className="py-3 px-4 font-medium">Product(s)</th>
-                <th className="py-3 px-4 font-medium">Date Created</th>
-                <th className="py-3 px-4 font-medium">Status</th>
-                <th className="py-3 px-4 font-medium">Actions</th>
+      <div className="mt-4 overflow-x-auto">
+        <table className="min-w-full text-sm">
+          <thead>
+            <tr className="text-left text-gray-600">
+              <th className="py-3 px-4 font-medium">Order ID</th>
+              <th className="py-3 px-4 font-medium">Customer</th>
+              <th className="py-3 px-4 font-medium">Product(s)</th>
+              <th className="py-3 px-4 font-medium">Date Created</th>
+              <th className="py-3 px-4 font-medium">Status</th>
+              <th className="py-3 px-4 font-medium">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filtered.map((o, i) => (
+              <tr key={o.id} className="border-t border-gray-100">
+                <td className="py-4 px-4">
+                  <Link href={`/orders/${o.id}`} className="text-indigo-600 hover:text-indigo-800 font-medium">{o.id}</Link>
+                </td>
+                <td className="py-4 px-4 text-gray-900 font-medium">{o.customer}</td>
+                <td className="py-4 px-4 text-gray-600">{o.products}</td>
+                <td className="py-4 px-4 text-gray-700">{o.date}</td>
+                <td className="py-4 px-4">
+                  <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${badge(o.status)}`}>{o.status}</span>
+                </td>
+                <td className="py-4 px-4">
+                  <button 
+                    onClick={() => router.push(`/DesignUser/design-queue/${o.id}`)}
+                    className="text-indigo-600 hover:text-indigo-800 font-medium hover:underline"
+                  >
+                    View Details
+                  </button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {filtered.map((o, i) => (
-                <tr key={o.id} className="border-t border-gray-100">
-                  <td className="py-4 px-4">
-                    <Link href={`/orders/${o.id}`} className="text-indigo-600 hover:text-indigo-800 font-medium">{o.id}</Link>
-                  </td>
-                  <td className="py-4 px-4 text-gray-900 font-medium">{o.customer}</td>
-                  <td className="py-4 px-4 text-gray-600">{o.products}</td>
-                  <td className="py-4 px-4 text-gray-700">{o.date}</td>
-                  <td className="py-4 px-4">
-                    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${badge(o.status)}`}>{o.status}</span>
-                  </td>
-                  <td className="py-4 px-4">
-                    <Link href={`/orders/${o.id}`} className="text-gray-900 hover:text-indigo-700 font-medium">View Details</Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
 
        {showCreateModal && (
@@ -191,6 +189,6 @@ export default function ProductionLinePage() {
           </div>
         )}
       </div>
-    </div>
+   
   );
 }

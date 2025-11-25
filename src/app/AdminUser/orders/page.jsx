@@ -3,7 +3,7 @@
 
 import React, { useMemo, useState } from 'react';
 import Link from 'next/link';
-import Sidebar from '@/app/AdminUser/components/Sidebar';
+import Sidebar from '@/components/Sidebar';
 
 const DEFAULT_ROWS = [
   { id: 'SF1005', customer: 'Tyrell Corporation', products: 'Voight-Kampff machine empathy sensors', date: 'Nov 20, 2025', status: 'Inquiry', dept: 'Design' },
@@ -48,13 +48,9 @@ export default function AllOrdersPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
-      {/* Sidebar */}
-      <Sidebar />
-
-      {/* Main */}
-      <main className="flex-1 p-6">
-        <div className="bg-white border border-gray-200 rounded-lg p-4">
+    <div className="w-full">
+      {/* Page content - layout is handled by ClientLayout */}
+      <div className="p-6">
           <div className="flex items-center justify-between mb-3">
             <div>
               <h1 className="text-2xl font-semibold text-black">All Orders</h1>
@@ -92,7 +88,6 @@ export default function AllOrdersPage() {
 
           <OrdersTable rows={filtered} />
         </div>
-      </main>
 
       {showModal && (
         <div className="fixed inset-0 z-50">
@@ -158,6 +153,7 @@ export default function AllOrdersPage() {
   );
 }
 
+// OrdersTable component
 function OrdersTable({ rows = [] }) {
   return (
     <div className="overflow-x-auto">

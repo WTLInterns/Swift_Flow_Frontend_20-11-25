@@ -1,4 +1,4 @@
-import Sidebar from '@/app/AdminUser/components/Sidebar';
+import Sidebar from '@/components/Sidebar';
 
 const MOCK_ORDERS = [
   {
