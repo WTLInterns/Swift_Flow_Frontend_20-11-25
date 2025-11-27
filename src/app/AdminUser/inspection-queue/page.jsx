@@ -99,7 +99,7 @@ export default function InspectionQueuePage() {
                 {filteredItems.map((item) => (
                   <tr key={item.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap text-indigo-600 font-medium text-sm">
-                      <Link href="#">{item.id}</Link>
+                      <Link href={`/AdminUser/orders/${item.id}`}>{item.id}</Link>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-gray-900 text-sm">
                       {item.customer}
@@ -126,10 +126,10 @@ export default function InspectionQueuePage() {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-indigo-600">
-                      <button className="inline-flex items-center gap-1 hover:text-indigo-700 whitespace-nowrap">
+                      <Link href={`/AdminUser/orders/${item.id}`} className="inline-flex items-center gap-1 hover:text-indigo-700 whitespace-nowrap">
                         <span>View Details</span>
                         <span>→</span>
-                      </button>
+                      </Link>
                     </td>
                   </tr>
                 ))}
@@ -155,7 +155,7 @@ export default function InspectionQueuePage() {
                   <div>
                     <div className="text-xs text-gray-500">Order ID</div>
                     <div className="text-sm font-medium text-indigo-600">
-                      <Link href="#">{item.id}</Link>
+                      <Link href={`/AdminUser/orders/${item.id}`}>{item.id}</Link>
                     </div>
                     <div className="mt-1 text-sm text-gray-900">{item.customer}</div>
                     <div className="mt-1 text-xs text-gray-600">
@@ -183,10 +183,10 @@ export default function InspectionQueuePage() {
                 </div>
 
                 <div className="mt-3 flex justify-end">
-                  <button className="text-sm text-indigo-600 font-medium inline-flex items-center gap-1">
+                  <Link href={`/AdminUser/orders/${item.id}`} className="text-sm text-indigo-600 font-medium inline-flex items-center gap-1">
                     <span>View Details</span>
                     <span>→</span>
-                  </button>
+                  </Link>
                 </div>
               </div>
             ))}

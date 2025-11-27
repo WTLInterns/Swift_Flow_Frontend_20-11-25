@@ -104,7 +104,7 @@ export default function ClientLayout({ children }) {
             </div>
             
             {/* Mobile header */}
-            <header className="sticky top-0 z-30 flex items-center justify-between h-16 px-4 bg-white border-b border-gray-200 lg:hidden">
+            <header className="sticky top-0 z-30 flex items-center justify-between h-12 px-4 bg-white border-b border-gray-200 lg:hidden">
               <div className="flex items-center justify-between w-full">
                 <button
                   onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -172,7 +172,7 @@ export default function ClientLayout({ children }) {
                         tabIndex="-1"
                         id="user-menu-item-2"
                       >
-                        Sign out
+                        Logout
                       </button>
                     </div>
                   )}
@@ -185,7 +185,7 @@ export default function ClientLayout({ children }) {
         {/* Main content */}
         <div className="flex flex-col">
           {/* Desktop header */}
-          <header className="hidden lg:flex items-center justify-end h-16 px-6 bg-white border-b border-gray-200">
+          <header className="hidden lg:flex items-center justify-end h-12 px-6 bg-white border-b border-gray-200">
             <div className="flex items-center">
               <div className="relative">
                 <button
@@ -247,7 +247,7 @@ export default function ClientLayout({ children }) {
                       tabIndex="-1"
                       id="desktop-user-menu-item-2"
                     >
-                      Sign out
+                      Logout
                     </button>
                   </div>
                 )}
@@ -255,7 +255,7 @@ export default function ClientLayout({ children }) {
             </div>
           </header>
           
-          <main className={`${showSidebar ? 'lg:pl-64' : ''} flex-1 ${showSidebar ? 'pt-16' : ''}`}>
+          <main className={`${showSidebar ? 'lg:pl-64' : ''} flex-1 ${showSidebar ? 'pt-2' : ''}`}>
             <div className="h-full">
               {children}
             </div>

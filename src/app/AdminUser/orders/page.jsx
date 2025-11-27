@@ -172,7 +172,7 @@ function OrdersTable({ rows = [] }) {
           {rows.map((r, i) => (
             <tr key={r.id} className={i % 2 ? 'bg-gray-50' : ''}>
               <td className="py-2 px-3 font-medium text-indigo-600">
-                <Link href={`/orders/${r.id}`} className="underline">{r.id}</Link>
+                <Link href={`/AdminUser/orders/${r.id}`} className="underline">{r.id}</Link>
               </td>
               <td className="py-2 px-3 text-black">{r.customer}</td>
               <td className="py-2 px-3 text-black">{r.products}</td>
@@ -183,7 +183,7 @@ function OrdersTable({ rows = [] }) {
                 </span>
               </td>
               <td className="py-2 px-3">
-                <Link href={`/orders/${r.id}`} className="text-black underline">View Details</Link>
+                <Link href={`/AdminUser/orders/${r.id}`} className="text-black underline">View Details</Link>
               </td>
             </tr>
           ))}

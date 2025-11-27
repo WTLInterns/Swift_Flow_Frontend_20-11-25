@@ -466,7 +466,7 @@ function OrdersTable({ rows = [], statusFilter = 'All', onView }) {
                     {visible.map((r, i) => (
                         <tr key={r.id} className={i % 2 ? 'bg-gray-50' : ''}>
                             <td className="py-2 px-3 font-medium text-indigo-600">
-                                <Link href={`/orders/${r.id}`} className="underline">{r.id}</Link>
+                                <Link href={`/MechanistUser/machining-jobs/${r.id}`} className="underline">{r.id}</Link>
                             </td>
                             <td className="py-2 px-3 text-black">{r.customer}</td>
                             <td className="py-2 px-3 text-black">{r.products}</td>
@@ -477,12 +477,12 @@ function OrdersTable({ rows = [], statusFilter = 'All', onView }) {
                                 </span>
                             </td>
                             <td className="py-2 px-3">
-                                <button
-                                    onClick={() => onView?.(r)}
-                                    className="text-blue-600 hover:text-blue-800 hover:underline"
-                                >
-                                    View Details
-                                </button>
+                                <Link 
+  href={`/MechanistUser/machining-jobs/${r.id}`}
+  className="text-blue-600 hover:text-blue-800 hover:underline"
+>
+  View Details
+</Link>
                             </td>
                         </tr>
                     ))}

@@ -106,7 +106,7 @@ export default function DesignQueuePage() {
               {filtered.map((o, i) => (
                 <tr key={o.id} className="border-t border-gray-100">
                   <td className="py-4 px-4">
-                    <Link href={`/orders/${o.id}`} className="text-indigo-600 hover:text-indigo-800 font-medium">{o.id}</Link>
+                    <Link href={`/MechanistUser/machining-jobs/${o.id}`} className="text-indigo-600 hover:text-indigo-800 font-medium">{o.id}</Link>
                   </td>
                   <td className="py-4 px-4 text-gray-900 font-medium">{o.customer}</td>
                   <td className="py-4 px-4 text-gray-600">{o.products}</td>
@@ -115,12 +115,12 @@ export default function DesignQueuePage() {
                     <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${badge(o.status)}`}>{o.status}</span>
                   </td>
                   <td className="py-4 px-4">
-                    <button 
-                      onClick={() => router.push(`/DesignUser/design-queue/${o.id}`)}
+                    <Link 
+                      href={`/MechanistUser/machining-jobs/${o.id}`}
                       className="text-indigo-600 hover:text-indigo-800 font-medium hover:underline"
                     >
                       View Details
-                    </button>
+                    </Link>
                   </td>
                 </tr>
               ))}
