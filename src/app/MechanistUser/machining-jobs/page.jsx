@@ -119,7 +119,7 @@ export default function DesignQueuePage() {
                       href={`/MechanistUser/machining-jobs/${o.id}`}
                       className="text-indigo-600 hover:text-indigo-800 font-medium hover:underline"
                     >
-                      View Details
+                      View Details→
                     </Link>
                   </td>
                 </tr>

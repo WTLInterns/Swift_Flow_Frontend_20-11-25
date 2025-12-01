@@ -32,9 +32,14 @@ const adminMenuItems = [
     href: '/AdminUser/accountant',
     icon: FiDollarSign,
     children: [
+      { name: 'Estimates', href: '/AdminUser/accountant/estimates' },
+      { name: 'Sales Orders', href: '/AdminUser/accountant/sales-orders' },
       { name: 'Invoices', href: '/AdminUser/accountant/invoices' },
-      { name: 'Expenses', href: '/AdminUser/accountant/expenses' },
-      { name: 'Reports', href: '/AdminUser/accountant/reports' },
+      { name: 'Recurring Invoices', href: '/AdminUser/accountant/recurring-invoices' },
+      { name: 'Delivery Challans', href: '/AdminUser/accountant/delivery-challans' },
+      { name: 'Payments Received', href: '/AdminUser/accountant/payments-received' },
+      { name: 'Credit Notes', href: '/AdminUser/accountant/credit-notes' },
+      { name: 'e-Way Bills', href: '/AdminUser/accountant/e-way-bills' },
     ]
   },
   { name: 'Design Queue', href: '/AdminUser/design-queue', icon: FiFileText },
@@ -151,18 +156,24 @@ export default function Sidebar({ user }) {
               <li key={item.name}>
                 {item.children ? (
                   <div>
-                    <button
-                      onClick={() => toggleExpand(item.name)}
+                    <Link
+                      href={item.href}
                       className={`w-full flex items-center justify-between p-3 rounded-lg text-sm font-medium ${isActive(item.href)}`}
                     >
                       <div className="flex items-center">
                         <item.icon className="h-5 w-5" />
                         <span className="ml-3">{item.name}</span>
                       </div>
-                      <span className="ml-2">
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault()
+                          toggleExpand(item.name)
+                        }}
+                        className="ml-2 p-1 hover:bg-gray-100 rounded"
+                      >
                         {expandedItems[item.name] ? <FiChevronUp size={16} /> : <FiChevronDown size={16} />}
-                      </span>
-                    </button>
+                      </button>
+                    </Link>
                     
                     {expandedItems[item.name] && (
                       <ul className="ml-8 mt-1 space-y-1">

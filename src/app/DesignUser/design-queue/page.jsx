@@ -115,7 +115,7 @@ export default function DesignQueuePage() {
                     onClick={() => router.push(`/DesignUser/design-queue/${o.id}`)}
                     className="text-indigo-600 hover:text-indigo-800 font-medium hover:underline"
                   >
-                    View Details
+                    View Details→
                   </button>
                 </td>
               </tr>

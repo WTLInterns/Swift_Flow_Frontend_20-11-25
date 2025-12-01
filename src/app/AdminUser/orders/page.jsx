@@ -183,7 +183,7 @@ function OrdersTable({ rows = [] }) {
                 </span>
               </td>
               <td className="py-2 px-3">
-                <Link href={`/AdminUser/orders/${r.id}`} className="text-black underline">View Details</Link>
+                <Link href={`/AdminUser/orders/${r.id}`} className="text-black underline">View Details→</Link>
               </td>
             </tr>
           ))}

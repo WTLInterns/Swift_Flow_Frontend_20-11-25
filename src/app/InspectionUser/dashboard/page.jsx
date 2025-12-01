@@ -473,7 +473,7 @@ function OrdersTable({ rows = [], statusFilter = 'All', onView }) {
                   href={`/InspectionUser/inspection-queue/${r.id}`}
                   className="text-blue-600 hover:text-blue-800 hover:underline"
                 >
-                  View Details
+                  View Details→
                 </Link>
               </td>
             </tr>

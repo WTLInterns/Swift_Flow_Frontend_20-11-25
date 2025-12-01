@@ -117,7 +117,7 @@ export default function ProductionLinePage() {
                     <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${badge(o.status)}`}>{o.status}</span>
                   </td>
                   <td className="py-4 px-4">
-                    <Link href={`/AdminUser/orders/${o.id}`} className="text-gray-900 hover:text-indigo-700 font-medium">View Details</Link>
+                    <Link href={`/AdminUser/orders/${o.id}`} className="text-gray-900 hover:text-indigo-700 font-medium">View Details→</Link>
                   </td>
                 </tr>
               ))}

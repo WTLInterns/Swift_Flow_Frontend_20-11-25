@@ -127,8 +127,7 @@ export default function InspectionQueuePage() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-indigo-600">
                       <Link href={`/AdminUser/orders/${item.id}`} className="inline-flex items-center gap-1 hover:text-indigo-700 whitespace-nowrap">
-                        <span>View Details</span>
-                        <span>→</span>
+                        <span>View Details→</span>
                       </Link>
                     </td>
                   </tr>
@@ -184,7 +183,7 @@ export default function InspectionQueuePage() {
 
                 <div className="mt-3 flex justify-end">
                   <Link href={`/AdminUser/orders/${item.id}`} className="text-sm text-indigo-600 font-medium inline-flex items-center gap-1">
-                    <span>View Details</span>
+                    <span>View Details→</span>
                     <span>→</span>
                   </Link>
                 </div>
